@@ -1,20 +1,34 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useStatsStore } from './store/useStatsStore'
 import LiveCounters from './components/LiveCounters.vue'
 import AreaChart from './components/AreaChart.vue'
 import FakeDataBoard from './components/FakeDataBoard.vue'
 
 const stats = useStatsStore()
-const labels = computed(() => stats.chartSeries.map(p => p.t))
-const data = computed(() => stats.chartSeries.map(p => p.v))
+stats.start() // start simulating live events
+
+// Reactive key to force remount components
+const refreshKey = ref(0)
+let intervalId: number
+
+onMounted(() => {
+  // Refresh components 
+  intervalId = window.setInterval(() => {
+    refreshKey.value++
+  }, 60000)
+})
+
+onUnmounted(() => {
+  clearInterval(intervalId)
+})
 </script>
 
 <template>
   <div class="min-h-screen bg-dark-animate text-white">
     <!-- Navbar -->
     <header class="sticky top-0 z-20 glass border-b border-white/10 shadow-glow">
-      <div class=" px-10 py-4 flex items-center justify-between">
+      <div class="px-10 py-4 flex items-center justify-between">
         <!-- Brand -->
         <div class="flex items-center gap-3">
           <div
@@ -27,32 +41,28 @@ const data = computed(() => stats.chartSeries.map(p => p.v))
           </div>
         </div>
 
-
         <!-- Badges -->
         <div class="flex items-center gap-3">
           <span class="badge text-green-300">Live</span>
           <span class="badge text-blue-300">Demo</span>
           <span class="badge hidden sm:inline-flex text-purple-300">Fake Data</span>
         </div>
-
       </div>
     </header>
 
     <!-- Content -->
     <main class="px-10 py-10 space-y-10">
-      <!-- Counters -->
-      <LiveCounters />
+      <!-- Live Counters -->
+      <LiveCounters :key="refreshKey" />
 
-      <!-- Charts + Upload -->
-
+      <!-- Charts -->
       <div class="lg:col-span-2 glass p-6 rounded-2xl shadow-glow">
-        <AreaChart :labels="labels" :data="data" />
+        <AreaChart :key="refreshKey" :labels="stats.chartSeries.map((p: { t: string, v: number }) => p.t)"
+          :data="stats.chartSeries.map((p: { t: string, v: number }) => p.v)" />
       </div>
 
-
-
       <!-- Fake Data Board -->
-      <FakeDataBoard />
+      <FakeDataBoard :key="refreshKey" />
 
       <!-- Extra Cards -->
       <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -77,9 +87,8 @@ const data = computed(() => stats.chartSeries.map(p => p.v))
     </main>
 
     <!-- Footer -->
-    <footer class="glass  mt-10 px-20 py-4 text-center text-slate-400 text-xs rounded-2xl">
+    <footer class="glass mt-10 px-20 py-4 text-center text-slate-400 text-xs rounded-2xl">
       © {{ new Date().getFullYear() }} Forzeit (Demo). All rights reserved.
     </footer>
-
   </div>
 </template>
