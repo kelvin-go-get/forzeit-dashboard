@@ -2,7 +2,7 @@
 import * as XLSX from 'xlsx'
 import { ref } from 'vue'
 
-const rows = ref<any[]>([])
+const rows = ref<unknown[]>([])
 
 function onFile(e: Event) {
     const input = e.target as HTMLInputElement
