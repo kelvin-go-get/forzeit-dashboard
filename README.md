@@ -22,3 +22,23 @@ This project was created as a **frontend exercise for Forzeit** and does not req
 ```bash
 git clone <your-repo-url>
 cd forzeit-dashboard
+```
+2. **Install dependencies**
+```bash
+
+npm install
+```
+
+3. **Run the project locally**
+```bash
+npm run dev
+```
+
+4. **Open http://localhost:5173 to see it in your browser.**
+
+5. **Build for production**
+```bash
+npm run build
+```
+
+This generates a dist/ folder for deployment.
