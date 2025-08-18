@@ -1,45 +1,26 @@
-# Forzeit Vue3 Dashboard (Frontend-only demo)
+# Forzeit Vue3 Admin Dashboard (Frontend Demo)
 
-## 1) Create the project
-npm create vite@latest forzeit-dashboard -- --template vue-ts
+This is a **frontend-only admin dashboard** built with **Vue 3 + TypeScript + TailwindCSS**.  
+It visualizes key Forzeit metrics using **charts and cards** with fake/live simulated data.
+
+The dashboard showcases:
+
+- **Active users (last 5s)** – live counter simulated in real time
+- **Users active in the last 24h** – rolling 24h simulated data
+- **Cards created (last 24h)** – event count simulated
+- **Monthly KPIs** – Unique visitors, Trial signups, Paid subscriptions, MRR & ARR
+- **Charts** – Line & Bar charts for visualization
+- **Extra cards** – Notes, Accessibility, and Performance highlights
+
+This project was created as a **frontend exercise for Forzeit** and does not require a backend.
+
+---
+
+## Getting Started (Run Locally)
+
+1. **Clone the repo**
+
+```bash
+git clone <your-repo-url>
 cd forzeit-dashboard
-
-## 2) Install deps
-npm i
-npm i -D tailwindcss postcss autoprefixer @vitejs/plugin-vue
-npm i @headlessui/vue @heroicons/vue chart.js vue-chartjs pinia xlsx dayjs
-
-## 3) Add Tailwind
-npx tailwindcss init -p
-# Replace tailwind.config.js and postcss.config.js with the provided ones.
-# Add src/style.css (and import it in main.ts already in this starter).
-
-## 4) Add the src/ files
-- App.vue, main.ts, components/*, store/* as shown above.
-
-## 5) Run locally
-npm run dev
-
-## 6) Build
-npm run build
-
-## 7) Deploy to Vercel
-- Create a new GitHub repo and push this project.
-- On vercel.com, import the repo.
-- Framework preset: **Vite** (should auto-detect)
-- Build command: `npm run build`
-- Output dir: `dist`
-- Env vars: none needed
-- Deploy ✨
-
-(Alternatively) Vercel CLI:
-- npm i -g vercel
-- vercel
-- vercel --prod
-
-## Notes for the brief
-- "Active users (last 5s)": live counter simulated each second.
-- "Users active (last 24h)": unique simulated users in rolling 24h window.
-- "Cards created (last 24h)": event count over rolling 24h.
-- Upload Excel to visualize the provided sheet in a table.
-- No backend required. Only clean, modern UI + code quality.
+```

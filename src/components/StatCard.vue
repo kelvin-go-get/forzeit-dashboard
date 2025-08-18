@@ -1,6 +1,11 @@
 <script setup lang="ts">
-
-
+interface Props {
+    label: string
+    value: string | number
+    sub?: string
+    positive?: boolean
+}
+const props = defineProps<Props>()
 </script>
 
 <template>
