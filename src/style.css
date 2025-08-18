@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  }
+
+  .card {
+    @apply glass rounded-2xl p-6 shadow-glow transition hover:scale-[1.01] hover:shadow-lg duration-300;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium bg-white/10 border border-white/10 shadow-sm backdrop-blur-sm;
+  }
+}
+
+/* in style.css */
+@layer components {
+  .glass {
+    @apply bg-slate-900/60 backdrop-blur-lg border border-slate-700/30 shadow-glow;
+  }
+  .card {
+    @apply glass rounded-2xl p-6 transition hover:shadow-xl hover:shadow-slate-900/70;
+  }
+  .badge {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium 
+           bg-slate-800/70 border border-slate-700/30 text-slate-300;
+  }
+}
+@layer utilities {
+  @keyframes darkGradient {
+    0% {
+      background-color: #000000;
+    }
+    10% {
+      background-color: #0f172a;
+    }
+    20% {
+      background-color: #111827;
+    }
+    30% {
+      background-color: #1e293b;
+    }
+    40% {
+      background-color: #0f172a;
+    }
+    60% {
+      background-color: #111827;
+    }
+    80% {
+      background-color: #1e293b;
+    }
+    100% {
+      background-color: #000000;
+    }
+  }
+
+  .bg-dark-animate {
+    animation: darkGradient 30s ease-in-out infinite;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-gradient-to-b from-slate-950 via-slate-900/95 to-black text-white;
+  }
+  header {
+    @apply sticky top-0 z-20 glass border-b border-white/10 shadow-glow;
+  }
+  footer {
+    @apply glass mt-10 px-4 py-4 text-center text-slate-400 text-xs rounded-2xl;
+  }
+}
