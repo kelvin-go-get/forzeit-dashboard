@@ -46,19 +46,27 @@ export const useStatsStore = defineStore("stats", {
       return count;
     },
     chartSeries(state): { t: string; v: number }[] {
-      // 24h hourly buckets
-      const buckets: Record<string, number> = {};
+      // Precompute 24h buckets with zero
+      const buckets: number[] = Array(24).fill(0);
+      const labels: string[] = [];
+
+      const now = dayjs();
       for (let h = 23; h >= 0; h--) {
-        const key = dayjs().subtract(h, "hour").startOf("hour").format("HH:00");
-        buckets[key] = 0;
+        const hour = now.subtract(h, "hour").startOf("hour");
+        labels.push(hour.format("HH:00"));
       }
-      const since = dayjs().subtract(24, "hour").valueOf();
+
+      // Only iterate once over events in last 24h
+      const since = now.subtract(24, "hour").valueOf();
       state.events.forEach((e) => {
-        if (e.at < since || e.type !== "login") return;
-        const key = dayjs(e.at).startOf("hour").format("HH:00");
-        buckets[key] = (buckets[key] || 0) + 1;
+        if (e.type !== "login" || e.at < since) return;
+        const diff = now.diff(dayjs(e.at), "hour");
+        const idx = 23 - diff; // map to 0..23
+        if (idx >= 0 && idx < 24 && typeof buckets[idx] === "number")
+          buckets[idx]++;
       });
-      return Object.entries(buckets).map(([t, v]) => ({ t, v }));
+
+      return labels.map((t, i) => ({ t, v: buckets[i] ?? 0 }));
     },
   },
   actions: {

@@ -48,7 +48,7 @@ const data = computed(() => stats.chartSeries.map(p => p.v))
       <div class="lg:col-span-2 glass p-6 rounded-2xl shadow-glow">
         <AreaChart :labels="labels" :data="data" />
       </div>
-      <!-- <UploadExcel /> -->
+
 
 
       <!-- Fake Data Board -->
@@ -61,7 +61,6 @@ const data = computed(() => stats.chartSeries.map(p => p.v))
           <ul class="text-slate-300 text-sm list-disc pl-5 space-y-1">
             <li>Live counters are simulated.</li>
             <li>Charts visualize fake dataset (Jan–Dec).</li>
-            <li>Excel upload supports alternative sheets.</li>
           </ul>
         </div>
 

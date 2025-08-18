@@ -1,4 +1,3 @@
-// src/data/fake.ts
 export const months = [
   "Jan",
   "Feb",
@@ -14,21 +13,43 @@ export const months = [
   "Dec",
 ];
 
-export const uniqueVisitors = [
-  148, 298, 193, 335, 297, 308, 385, 481, 602, 752, 940, 1175,
-];
+// Generate last 24 hours labels
+export const last24Hours: string[] = Array.from({ length: 24 }, (_, i) => {
+  const hour = new Date();
+  hour.setHours(hour.getHours() - (23 - i));
+  return `${hour.getHours().toString().padStart(2, "0")}:00`;
+});
 
-export const trialSignups = [1, 4, 3, 17, 19, 18, 26, 33, 42, 54, 70, 89];
+const generateSmoothData = (
+  length: number,
+  min: number,
+  max: number,
+  start?: number
+) => {
+  const data: number[] = [];
+  let base = start ?? Math.floor((min + max) / 2);
+  for (let i = 0; i < length; i++) {
+    base += Math.floor(Math.random() * 5) - 2;
+    if (base < min) base = min;
+    if (base > max) base = max;
+    data.push(base);
+  }
+  return data;
+};
 
-export const trialSignupConvRate = [
-  0.0068, 0.0134, 0.0155, 0.0507, 0.064, 0.0656, 0.0672, 0.0689, 0.0706, 0.0724,
-  0.0742, 0.076,
-];
+// 24h activity data
+export const hourlyActiveLogins: number[] = generateSmoothData(24, 20, 80, 50);
 
-export const paidSubscriptions = [
-  1, 0, 0, 0, 0, 0, 2.1, 4.0, 6.8, 10.3, 13.9, 18.8,
-];
-
+// Other data (simulate growth or natural variations)
+export const uniqueVisitors: number[] = generateSmoothData(12, 100, 1200, 150);
+export const trialSignups: number[] = generateSmoothData(12, 1, 90, 5);
+export const trialSignupConvRate: number[] = generateSmoothData(
+  12,
+  0.005,
+  0.08,
+  0.01
+).map((v) => parseFloat(v.toFixed(4)));
+export const paidSubscriptions: number[] = generateSmoothData(12, 0, 20, 1);
 export const newMRR = [14, 0, 0, 0, 0, 0, 39, 76, 129, 196, 265, 356];
 
 export const currentMRR = [

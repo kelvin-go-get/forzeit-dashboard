@@ -10,11 +10,10 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js'
-
+import { last24Hours, hourlyActiveLogins } from '../data/fake'
 Chart.register(LineElement, PointElement, LinearScale, CategoryScale, Filler, Tooltip, Legend)
 
-interface Props { labels: string[]; data: number[] }
-const props = defineProps<Props>()
+
 
 const options = {
     responsive: true,
@@ -27,11 +26,11 @@ const options = {
 }
 
 const dataset = {
-    labels: props.labels,
+    labels: last24Hours,
     datasets: [
         {
             label: 'Hourly Active Logins',
-            data: props.data,
+            data: hourlyActiveLogins,
             fill: true,
             backgroundColor: 'rgba(59,130,246,0.15)',
             borderColor: 'rgba(59,130,246,1)',
