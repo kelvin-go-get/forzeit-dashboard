@@ -21,7 +21,7 @@ This project was created as a **frontend exercise for Forzeit** and does not req
 1. **Clone the repo**
 
 ```bash
-git clone <your-repo-url>
+git clone <repo-url>
 cd forzeit-dashboard
 ```
 
